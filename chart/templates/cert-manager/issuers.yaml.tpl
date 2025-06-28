@@ -11,7 +11,7 @@ spec:
     server: {{ .server }}
     # email: {{ .email }}
     privateKeySecretRef:
-      name: {{ .externalSecret.name }}
+      name: {{ .privateKeyName }}
       key: token
     solvers:
       - dns01:
