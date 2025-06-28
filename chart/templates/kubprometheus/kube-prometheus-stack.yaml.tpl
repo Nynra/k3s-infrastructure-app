@@ -17,13 +17,6 @@ spec:
     repoURL: https://prometheus-community.github.io/helm-charts
     chart: kube-prometheus-stack
     targetRevision: {{ .Values.kubePrometheusStack.targetRevision }}
-    helm:
-      values: |
-        grafana:
-          admin:
-            existingSecret: {{ .Values.kubePrometheusStack.grafana.externalSecret.name }}
-            userKey: username
-            passwordKey: password
   syncPolicy:
     automated:
       prune: true
