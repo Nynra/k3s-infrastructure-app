@@ -1,0 +1,210 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kube-prometheus-stack-app
+  namespace: {{ .Values.global.argocdConfig.namespace }}
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd.argoproj.io/sync-wave: "-5"
+    argocd.argoproj.io/sync-options: Validate=false
+spec:
+  project: {{ .Values.project }}
+  destination:
+    server: {{ .Values.global.argocdConfig.server }}
+    namespace: {{ .Values.kubePrometheusStack.namespace }}
+  source:
+    repoURL: https://prometheus-community.github.io/helm-charts
+    chart: kube-prometheus-stack
+    targetRevision: {{ .Values.kubePrometheusStack.targetRevision }}
+    helm:
+      values: |
+        fullnameOverride: prometheus
+        defaultRules:
+          create: true
+          rules:
+            alertmanager: true
+            etcd: true
+            configReloaders: true
+            general: true
+            k8s: true
+            kubeApiserverAvailability: true
+            kubeApiserverBurnrate: true
+            kubeApiserverHistogram: true
+            kubeApiserverSlos: true
+            kubelet: true
+            kubeProxy: true
+            kubePrometheusGeneral: true
+            kubePrometheusNodeRecording: true
+            kubernetesApps: true
+            kubernetesResources: true
+            kubernetesStorage: true
+            kubernetesSystem: true
+            kubeScheduler: true
+            kubeStateMetrics: true
+            network: true
+            node: true
+            nodeExporterAlerting: true
+            nodeExporterRecording: true
+            prometheus: true
+            prometheusOperator: true
+
+        alertmanager:
+          fullnameOverride: alertmanager
+          enabled: true
+          ingress:
+            enabled: false
+
+        grafana:
+          enabled: true
+          fullnameOverride: grafana
+          forceDeployDatasources: false
+          forceDeployDashboards: false
+          defaultDashboardsEnabled: true
+          defaultDashboardsTimezone: utc
+          serviceMonitor:
+            enabled: true
+          admin:
+            existingSecret: grafana-admin-credentials
+            userKey: username
+            passwordKey: password
+
+        kubeApiServer:
+          enabled: true
+
+        kubelet:
+          enabled: true
+          serviceMonitor:
+            metricRelabelings:
+              - action: replace
+                sourceLabels:
+                  - node
+                targetLabel: instance
+
+        kubeControllerManager:
+          enabled: true
+          endpoints: # ips of servers 
+          {{- range .Values.kubePrometheusStack.managerIps }}
+          - "{{ . }}"
+          {{- end }}
+
+        coreDns:
+          enabled: true
+
+        kubeDns:
+          enabled: false
+
+        kubeEtcd:
+          enabled: true
+          endpoints: # ips of servers
+          {{- range .Values.kubePrometheusStack.managerIps }}
+          - "{{ . }}"
+          {{- end }}
+          service:
+            enabled: true
+            port: 2381
+            targetPort: 2381
+
+        kubeScheduler:
+          enabled: true
+          endpoints: # ips of servers
+          {{- range .Values.kubePrometheusStack.managerIps }}
+          - "{{ . }}"
+          {{- end }}
+
+        kubeProxy:
+          enabled: true
+          endpoints: # ips of servers
+          {{- range .Values.kubePrometheusStack.managerIps }}
+          - "{{ . }}"
+          {{- end }}
+
+        kubeStateMetrics:
+          enabled: true
+
+        kube-state-metrics:
+          fullnameOverride: kube-state-metrics
+          selfMonitor:
+            enabled: true
+          prometheus:
+            monitor:
+              enabled: true
+              relabelings:
+                - action: replace
+                  regex: (.*)
+                  replacement: $1
+                  sourceLabels:
+                    - __meta_kubernetes_pod_node_name
+                  targetLabel: kubernetes_node
+
+        nodeExporter:
+          enabled: true
+          serviceMonitor:
+            relabelings:
+              - action: replace
+                regex: (.*)
+                replacement: $1
+                sourceLabels:
+                  - __meta_kubernetes_pod_node_name
+                targetLabel: kubernetes_node
+
+        prometheus-node-exporter:
+          fullnameOverride: node-exporter
+          podLabels:
+            jobLabel: node-exporter
+          extraArgs:
+            - --collector.filesystem.mount-points-exclude=^/(dev|proc|sys|var/lib/docker/.+|var/lib/kubelet/.+)($|/)
+            - --collector.filesystem.fs-types-exclude=^(autofs|binfmt_misc|bpf|cgroup2?|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|iso9660|mqueue|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|squashfs|sysfs|tracefs)$
+          service:
+            portName: http-metrics
+          prometheus:
+            monitor:
+              enabled: true
+              relabelings:
+                - action: replace
+                  regex: (.*)
+                  replacement: $1
+                  sourceLabels:
+                    - __meta_kubernetes_pod_node_name
+                  targetLabel: kubernetes_node
+          resources:
+            requests:
+              memory: 512Mi
+              cpu: 250m
+            limits:
+              memory: 2048Mi
+
+        prometheusOperator:
+          enabled: true
+          prometheusConfigReloader:
+            resources:
+              requests:
+                cpu: 200m
+                memory: 50Mi
+              limits:
+                memory: 100Mi
+
+        prometheus:
+          enabled: true
+          prometheusSpec:
+            replicas: 1
+            replicaExternalLabelName: "replica"
+            ruleSelectorNilUsesHelmValues: false
+            serviceMonitorSelectorNilUsesHelmValues: false
+            podMonitorSelectorNilUsesHelmValues: false
+            probeSelectorNilUsesHelmValues: false
+            retention: 6h
+            enableAdminAPI: true
+            walCompression: true
+            scrapeInterval: 30s
+            evaluationInterval: 30s
+
+        thanosRuler:
+          enabled: false
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - ServerSideApply=true  # Needed for large crds
+      - CreateNamespace=true

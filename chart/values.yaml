@@ -8,10 +8,6 @@ project: "default"
 
 traefik:
   namespace: traefik
-  # targetRevision: v35.3.0
-
-  # replicas: 3
-  # loadBalancerIP: 192.168.3.80
 
   dashboard:
     enabled: true
@@ -108,28 +104,40 @@ crowdsec:
   appsec:
     enabled: false
 
-kubDashboard:
-  namespace: kubernetes-dashboard
-  targetRevision: 7.13.0
-  clusterName: "example-cluster"
-  ingressUrl: "dash.example.com"
-  tlsSecretName: example-com-tls
+kubePrometheusStack:
+  namespace: monitoring
+  targetRevision: HEAD
 
-  externalSecret:
-    name: kubernetes-dashboard-auth
-    refreshInterval: "1h"
-    remoteSecretName: "kubernetes-dashboard-auth"
-    remoteSecretStore: "kubernetes"
-    tokenProperty: "password"
+  managerIps:
+    - 192.168.3.100
+
+  grafana:
+    ingressUrl: "grafana.example.com"
+    tlsSecretName: example-com-tls
+
+    externalSecret:
+      name: grafana-admin-password
+      remoteSecretName: "GrafanaAdminPassword"
+      remoteSecretStore: "kubernetes"
+      userPropertyName: "username"
+      passwordPropertyName: "password"
+
+# kubDashboard:
+#   namespace: kubernetes-dashboard
+#   targetRevision: 7.13.0
+#   clusterName: "example-cluster"
+#   ingressUrl: "dash.example.com"
+#   tlsSecretName: example-com-tls
+
+#   externalSecret:
+#     name: kubernetes-dashboard-auth
+#     refreshInterval: "1h"
+#     remoteSecretName: "kubernetes-dashboard-auth"
+#     remoteSecretStore: "kubernetes"
+#     tokenProperty: "password"
 
 longhorn:
   namespace: longhorn-system
-  # targetRevision: v1.9.0
-  # preUpgradeCheckerJobEnabled: false
-  # storageReplicas: 2
-  # defaultStorageClass: true
-  # defaultStorageReplicaCount: 2
-  # defaultMigratable: true
 
   dashboard:
     enabled: true
@@ -137,21 +145,6 @@ longhorn:
     serviceType: ClusterIP # LoadBalancer can be used for debugging
     tlsSecretName: example-com-tls
     ingressUrl: "longhorn.example.com"
-
-reflector:
-  # Reflector is only used to sync certificates between namespaces
-  # so should be in the cert-manager namespace
-  # namespace: reflector
-  targetRevision: 9.1.11
-
-# eks:
-#   onepasswordConnect:
-#     namespace: external-secrets
-#     targetRevision: 1.17.0
-
-#   onepasswordOperator:
-#     namespace: external-secrets
-#     targetRevision: 0.17.0
 
 mainVault:
   name: main-vault
