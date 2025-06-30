@@ -4,6 +4,6 @@ metadata:
   name: ratelimit
 spec:
   rateLimit:
-    period: {{ .Values.traefik.rateLimiting.period }}
-    average: {{ .Values.traefik.rateLimiting.average }}
-    burst: {{ .Values.traefik.rateLimiting.burst }}
+    period: {{ .Values.traefikMiddlewares.rateLimiting.period }}
+    average: {{ .Values.traefikMiddlewares.rateLimiting.average }}
+    burst: {{ .Values.traefikMiddlewares.rateLimiting.burst }}
