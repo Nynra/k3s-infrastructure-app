@@ -121,26 +121,27 @@ crowdsec:
   appsec:
     enabled: false
 
-kubePrometheusStack:
+prometheus:
   namespace: monitoring
   targetRevision: HEAD
 
   managerIps:
     - 192.168.3.100
 
-  grafana:
-    ingressUrl: "grafana.example.com"
-    externalCert:
-      name: example-com-tls
-      remoteSecretName: "example-com-tls"
-      remoteSecretStore: "certs-vault"
+grafana:
+  # Has to be in the same namespace as prometheus
+  ingressUrl: "grafana.example.com"
+  externalCert:
+    name: example-com-tls
+    remoteSecretName: "example-com-tls"
+    remoteSecretStore: "certs-vault"
 
-    externalSecret:
-      name: grafana-admin-password
-      remoteSecretName: "GrafanaAdminPassword"
-      remoteSecretStore: "kubernetes"
-      userPropertyName: "username"
-      passwordPropertyName: "password"
+  externalSecret:
+    name: grafana-admin-password
+    remoteSecretName: "GrafanaAdminPassword"
+    remoteSecretStore: "kubernetes"
+    userPropertyName: "username"
+    passwordPropertyName: "password"
 
 # kubDashboard:
 #   namespace: kubernetes-dashboard

@@ -2,17 +2,17 @@ apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: grafana-ingress
-  namespace: {{ .Values.kubePrometheusStack.namespace }}
+  namespace: {{ .Values.prometheus.namespace }}
   annotations: 
     kubernetes.io/ingress.class: traefik-internal
 spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`{{ .Values.kubePrometheusStack.grafana.ingressUrl }}`)
+    - match: Host(`{{ .Values.grafana.ingressUrl }}`)
       kind: Rule
       services:
-        - name: kube-prometheus-stack-app-grafana
+        - name: prometheus-app-grafana
           port: 80
           sticky:
             cookie:
@@ -21,4 +21,4 @@ spec:
               secure: true
               sameSite: none
   tls:
-    secretName: {{ .Values.kubePrometheusStack.grafana.externalCert.name }}
+    secretName: {{ .Values.grafana.externalCert.name }}
