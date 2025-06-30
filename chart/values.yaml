@@ -157,8 +157,11 @@ longhorn:
     enabled: true
     replicaCount: 1
     serviceType: ClusterIP # LoadBalancer can be used for debugging
-    tlsSecretName: example-com-tls
     ingressUrl: "longhorn.example.com"
+    externalCert:
+      name: example-com-tls
+      remoteSecretName: "example-com-tls"
+      remoteSecretStore: "certs-vault"
 
 vaults:
   mainVault:
