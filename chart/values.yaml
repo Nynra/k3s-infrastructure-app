@@ -130,7 +130,10 @@ kubePrometheusStack:
 
   grafana:
     ingressUrl: "grafana.example.com"
-    tlsSecretName: example-com-tls
+    externalCert:
+      name: example-com-tls
+      remoteSecretName: "example-com-tls"
+      remoteSecretStore: "certs-vault"
 
     externalSecret:
       name: grafana-admin-password
