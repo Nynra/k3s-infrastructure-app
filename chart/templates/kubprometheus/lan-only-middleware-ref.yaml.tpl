@@ -2,7 +2,7 @@ apiVersion: traefik.io/v1alpha1
 kind: TraefikService
 metadata:
   name: lan-only-ref
-  namespace: {{ .Values.longhorn.namespace }}
+  namespace: {{ .Values.kubePrometheusStack.namespace }}
   annotations:
     argocd.argoproj.io/sync-wave: "-2"
 spec:

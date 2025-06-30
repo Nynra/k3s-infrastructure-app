@@ -54,6 +54,11 @@ certManager:
         - "*.example.com"
       # Add more domains as needed
 
+argocd:
+  dashboard:
+    ingressUrl: "argocd.example.com"
+    tlsSecretName: example-com-tls
+
 crowdsec:
   targetRevision: 0.19.3
   namespace: crowdsec
