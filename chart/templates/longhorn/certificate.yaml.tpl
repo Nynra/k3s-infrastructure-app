@@ -2,8 +2,6 @@ apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
   name: {{ .Values.longhorn.dashboard.externalCert.name }}
-  # Argocd cannot add secrets to the default namespace but issuers look
-  # in the cert-manager namespace automatically
   namespace: {{ .Values.longhorn.namespace }}
   annotations:
     argocd.argoproj.io/sync-wave: "-4"
