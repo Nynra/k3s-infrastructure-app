@@ -12,7 +12,7 @@ spec:
     - match: Host(`{{ .Values.kubePrometheusStack.grafana.ingressUrl }}`)
       kind: Rule
       services:
-        - name: grafana
+        - name: kube-prometheus-stack-app-grafana  
           port: 80
           # sticky:
           #   cookie:
