@@ -12,7 +12,10 @@ traefik:
   dashboard:
     enabled: true
     ingressUrl: "traefik.example.com"
-    tlsSecretName: example-com-tls
+    externalCert:
+      name: example-com-tls
+      remoteSecretName: "example-com-tls"
+      remoteSecretStore: "certs-vault"
 
 traefikMiddlewares:
   crowdsecBouncerVersion: v1.3.3
