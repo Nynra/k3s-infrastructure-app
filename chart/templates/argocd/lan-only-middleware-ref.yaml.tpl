@@ -8,4 +8,4 @@ metadata:
 spec:
   mirroring:
     name: lan-only
-    namespace: {{ .Values.traefik.namespace }}
+    # namespace: {{ .Values.traefik.namespace }}
