@@ -1,6 +1,6 @@
 {{- range .Values.certManager.certs }}
 ---
-apiVersion: external-secrets.io/v1
+apiVersion: external-secrets.io/v1alpha1
 kind: PushSecret
 metadata:
   name: {{ .name }}-push-secret
