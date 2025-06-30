@@ -10,7 +10,7 @@ metadata:
     # reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
     # reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: ""
 spec:
-  # secretName: {{ .name }}
+  secretName: {{ .name }}
   commonName: {{ .commonName }}
   dnsNames:
     {{- range .dnsNames }}
