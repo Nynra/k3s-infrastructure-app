@@ -12,9 +12,9 @@ spec:
   routes:
     - match: Host(`{{ .Values.longhorn.dashboard.ingressUrl }}`)
       kind: Rule
-      middlewares:
-        - name: lan-only-ref
-          kind: TraefikService
+      # middlewares:
+      #   - name: lan-only-ref
+      #     kind: TraefikService
       services:
         - name: longhorn-frontend
           port: 80
