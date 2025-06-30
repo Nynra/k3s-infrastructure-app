@@ -13,7 +13,7 @@ spec:
       kind: Rule
       middlewares:
         - name: lan-only-ref
-          kind: TraefikService
+          # kind: TraefikService
       services:
         - name: argocd-server
           port: 80
