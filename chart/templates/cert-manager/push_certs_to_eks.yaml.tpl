@@ -6,7 +6,7 @@ metadata:
   name: {{ .name }}-push-secret
   namespace: {{ $.Values.certManager.namespace }}
   annotations:
-    argocd.argoproj.io/sync-wave: "-8"
+    argocd.argoproj.io/sync-wave: "-7"
 spec:
   deletionPolicy: Delete
   updatePolicy: Replace
