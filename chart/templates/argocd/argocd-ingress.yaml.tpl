@@ -13,6 +13,7 @@ spec:
       kind: Rule
       middlewares:
         - name: lan-only-ref
+          namespace: {{ .Values.traefik.namespace }}
           # kind: TraefikService
       services:
         - name: argocd-server
