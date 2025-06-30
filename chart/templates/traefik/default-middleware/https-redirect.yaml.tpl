@@ -4,7 +4,7 @@ metadata:
   name: redirect-to-https
   namespace: {{ .Values.traefik.namespace }}
   annotations:
-    argocd.argoproj.io/sync-wave: "23"
+    argocd.argoproj.io/sync-wave: "-3"
 spec:
   redirectScheme:
     scheme: https

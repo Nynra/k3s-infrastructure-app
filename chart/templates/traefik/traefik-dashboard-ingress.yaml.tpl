@@ -5,7 +5,7 @@ metadata:
   namespace: {{ .Values.traefik.namespace }}
   annotations:
     kubernetes.io/ingress.class: traefik-external
-    argocd.argoproj.io/sync-wave: "24"
+    # argocd.argoproj.io/sync-wave: ""
 spec:
   entryPoints:
     # - local

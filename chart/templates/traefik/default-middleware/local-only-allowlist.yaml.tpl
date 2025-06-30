@@ -4,7 +4,7 @@ metadata:
   name: lan-only
   namespace: {{ .Values.traefik.namespace }}
   annotations:
-    argocd.argoproj.io/sync-wave: "23"
+    argocd.argoproj.io/sync-wave: "-3"
 spec:
   ipWhiteList:
     sourceRange:

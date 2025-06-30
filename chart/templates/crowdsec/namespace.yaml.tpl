@@ -3,4 +3,4 @@ kind: Namespace
 metadata:
   name: {{ .Values.crowdsec.namespace }}
   annotations:
-    argocd.argoproj.io/sync-wave: "4"
+    argocd.argoproj.io/sync-wave: "-5"
