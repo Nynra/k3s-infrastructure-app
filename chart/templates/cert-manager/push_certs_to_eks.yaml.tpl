@@ -21,11 +21,11 @@ spec:
     - match:
         secretKey: tls.crt 
         remoteRef:
-            remoteKey: tls.crt
+            remoteKey: {{ .secretName }}
             property: tls_crt
     - match:
         secretKey: tls.key
         remoteRef:
-            remoteKey: tls.key
+            remoteKey: {{ .secretName }}
             property: tls_key
 {{- end }}
