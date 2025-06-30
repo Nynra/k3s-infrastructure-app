@@ -17,4 +17,4 @@ spec:
         - name: api@internal
           kind: TraefikService
   tls:
-    secretName: {{ .Values.traefik.dashboard.tlsSecretName }}
+    secretName: {{ .Values.traefik.dashboard.externalCert.name }}

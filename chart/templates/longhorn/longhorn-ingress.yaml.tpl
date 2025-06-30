@@ -19,4 +19,4 @@ spec:
         - name: longhorn-frontend
           port: 80
   tls:
-    secretName: {{ .Values.longhorn.dashboard.tlsSecretName }}
+    secretName: {{ .Values.longhorn.dashboard.externalCert.name }}
