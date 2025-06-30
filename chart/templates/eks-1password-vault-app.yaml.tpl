@@ -5,7 +5,6 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "-15"
     # Cannot validate as the needed CRD is not installed yet
-    argocd.argoproj.io/sync-options: Validate=false
 spec:
   provider:
     onepassword:
