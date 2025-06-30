@@ -5,6 +5,8 @@ kind: PushSecret
 metadata:
   name: {{ .name }}-push-secret
   namespace: {{ $.Values.certManager.namespace }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-8"
 spec:
   deletionPolicy: Delete
   updatePolicy: Replace
