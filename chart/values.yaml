@@ -33,8 +33,6 @@ certManager:
 
   issuers:
     - name: cloudflare-issuer-example
-      namespace: cert-manager
-      email: example@example.com
       privateKeyName: cloudflare-issuer-private-key
       server: https://acme-staging-v02.api.letsencrypt.org/directory
       externalSecret:
@@ -47,12 +45,16 @@ certManager:
         - example2.com
       # Add more domains as needed
 
+  certsVault:
+    name: certs-vault
+    vaultName: homelab-certs-vault
+    connectTokenSecretName: onepassword-connect-token
+    connectTokenNamespace: external-secrets
+
   certs:
     - name: example-com-tls
-      namespace: cert-manager
-      secretName: example-com-tls
-      clusterIssuer: letsencrypt-staging
       commonName: example.com
+      clusterIssuer: letsencrypt-staging
       dnsNames:
         - example.com
         - "*.example.com"
@@ -155,8 +157,9 @@ longhorn:
     tlsSecretName: example-com-tls
     ingressUrl: "longhorn.example.com"
 
-mainVault:
-  name: main-vault
-  vaultName: homelab-vault
-  connectTokenSecretName: onepassword-connect-token
-  connectTokenNamespace: external-secrets
+vaults:
+  mainVault:
+    name: main-vault
+    vaultName: homelab-vault
+    connectTokenSecretName: onepassword-connect-token
+    connectTokenNamespace: external-secrets

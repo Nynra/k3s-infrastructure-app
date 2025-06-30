@@ -9,7 +9,6 @@ metadata:
 spec:
   acme:
     server: {{ .server }}
-    # email: {{ .email }}
     privateKeySecretRef:
       name: {{ .privateKeyName }}
       key: token
