@@ -19,4 +19,4 @@ spec:
         - name: argocd-server
           port: 80
   tls:
-    secretName: {{ .Values.argocd.dashboard.tlsSecretName }}
+    secretName: {{ .Values.argocd.dashboard.externalCert.name }}
