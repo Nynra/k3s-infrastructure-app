@@ -20,6 +20,10 @@ traefikMiddlewares:
     localIpCIDRs:
       # Can also be restricted to certain subnets
       - 192.168.0.0/16 # 192.168.x.x
+  rateLimiting:
+    average: 100
+    burst: 200
+    period: 1s
 
 certManager:
   name: cert-manager
