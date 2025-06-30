@@ -2,7 +2,7 @@ apiVersion: traefik.io/v1alpha1 # traefik.containo.us/v1alpha1 depreciated in Tr
 kind: Middleware
 metadata:
   name: default-headers
-  namespace: {{ .Values.traefik.namespace }}
+  # namespace: {{ .Values.traefik.namespace }}
   annotations:
     argocd.argoproj.io/sync-wave: "-3"
 spec:
