@@ -1,3 +1,4 @@
+{{- if .Values.certManager.enablePushCerts }}
 {{- range .Values.certManager.certs }}
 ---
 apiVersion: external-secrets.io/v1alpha1
@@ -28,4 +29,5 @@ spec:
         remoteRef:
             remoteKey: {{ .secretName }}
             property: tls_key
+{{- end }}
 {{- end }}

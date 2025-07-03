@@ -31,8 +31,9 @@ traefikMiddlewares:
 certManager:
   name: cert-manager
   namespace: cert-manager
-  # targetRevision: v1.17.2
-  # replicas: 3
+  enableIssuers: true
+  enableCerts: false
+  enablePushCerts: false
 
   issuers:
     - name: cloudflare-issuer-example

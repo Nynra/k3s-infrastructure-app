@@ -1,3 +1,4 @@
+{{- if .Values.certManager.enableIssuers }}
 {{- range .Values.certManager.issuers }}
 ---
 apiVersion: cert-manager.io/v1
@@ -23,4 +24,5 @@ spec:
           {{- range .domains }}
           - "{{ . }}"
           {{- end }} 
+{{- end }}
 {{- end }}
