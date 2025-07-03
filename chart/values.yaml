@@ -32,7 +32,7 @@ certManager:
   name: cert-manager
   namespace: cert-manager
   enableIssuers: true
-  enableCerts: false
+  enableCerts: true
   enablePushCerts: false
 
   issuers:
