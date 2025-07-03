@@ -124,7 +124,7 @@ crowdsec:
 
 prometheus:
   namespace: monitoring
-  targetRevision: HEAD
+  targetRevision: 75.6.1
 
   managerIps:
     - 192.168.3.100
