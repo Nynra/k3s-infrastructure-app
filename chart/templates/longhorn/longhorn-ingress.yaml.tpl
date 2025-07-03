@@ -4,6 +4,7 @@ metadata:
   name: longhorn-ingress
   namespace: {{ .Values.longhorn.namespace }}
   annotations:
+    kubernetes.io/ingress.class: traefik-external
     # argocd.argoproj.io/sync-wave: "29"
 spec:
   entryPoints:
