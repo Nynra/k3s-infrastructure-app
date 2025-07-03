@@ -28,6 +28,7 @@ spec:
             ingressClassName: traefik-external
             annotations:
               kubernetes.io/ingress.class: traefik-external
+              traefik.ingress.kubernetes.io/router.entrypoints: websecure
             hosts:
               - {{ .Values.grafana.ingressUrl }}
             tls:
