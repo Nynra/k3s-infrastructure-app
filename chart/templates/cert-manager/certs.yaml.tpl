@@ -1,4 +1,4 @@
-{{- if .Values.certManager.enabledCerts }}
+{{- if .Values.certManager.enableCerts }}
 {{- range .Values.certManager.certs }}
 ---
 apiVersion: cert-manager.io/v1
