@@ -3,8 +3,6 @@ kind: IngressRoute
 metadata:
   name: grafana-ingress
   namespace: {{ .Values.prometheus.namespace }}
-  annotations: 
-    kubernetes.io/ingress.class: traefik-external
 spec:
   entryPoints:
     - websecure
