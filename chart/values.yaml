@@ -33,7 +33,7 @@ certManager:
   namespace: cert-manager
   enableIssuers: true
   enableCerts: true
-  enablePushCerts: false
+  enablePushCerts: true
 
   issuers:
     - name: cloudflare-issuer-example
