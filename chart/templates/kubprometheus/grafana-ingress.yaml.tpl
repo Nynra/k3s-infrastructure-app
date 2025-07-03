@@ -12,7 +12,7 @@ spec:
     - match: Host(`{{ .Values.grafana.ingressUrl }}`)
       kind: Rule
       services:
-        - name: grafana
+        - name: prometheus-grafana
           port: 80
           # sticky:
           #   cookie:
