@@ -14,11 +14,11 @@ spec:
       services:
         - name: grafana
           port: 80
-          sticky:
-            cookie:
-              httpOnly: true
-              name: grafana
-              secure: true
-              sameSite: none
+          # sticky:
+          #   cookie:
+          #     httpOnly: true
+          #     name: grafana
+          #     secure: true
+          #     sameSite: none
   tls:
     secretName: {{ .Values.grafana.externalCert.name }}
